@@ -1,0 +1,21 @@
+FINAL WIRESHARK PCAP MANIFEST
+=============================
+
+Representative seed: 101
+
+Cooja radio medium: UDGM
+PCAP link type: IEEE 802.15.4 (195)
+
+Files:
+
+-rw-rw-rw- 1 root root 708K Nov  2 21:07 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/baseline_seed101.pcap
+-rw-rw-rw- 1 root root 676K Nov  2 21:07 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/blackhole_attack_seed101.pcap
+-rw-rw-rw- 1 root root 696K Nov  2 21:08 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/blackhole_mitigated_seed101.pcap
+-rw-rw-rw- 1 root root 708K Nov  2 21:09 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/decreased_rank_attack_seed101.pcap
+-rw-rw-rw- 1 root root 708K Nov  2 21:09 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/decreased_rank_mitigated_seed101.pcap
+-rw-rw-rw- 1 root root 875K Nov  2 21:10 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/dis_flood_attack_seed101.pcap
+-rw-rw-rw- 1 root root 706K Nov  2 21:10 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/dis_flood_mitigated_seed101.pcap
+-rw-rw-rw- 1 root root 1.3M Nov  2 21:09 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/dodag_version_attack_seed101.pcap
+-rw-rw-rw- 1 root root 708K Nov  2 21:10 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/dodag_version_mitigated_seed101.pcap
+-rw-rw-rw- 1 root root 689K Nov  2 21:08 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/grayhole_attack_seed101.pcap
+-rw-rw-rw- 1 root root 705K Nov  2 21:08 /workspaces/contiki-ng/examples/rpl-security-thesis/results/final-framework/wireshark/captures/grayhole_mitigated_seed101.pcap

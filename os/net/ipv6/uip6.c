@@ -1,3 +1,4 @@
+#include "thesis-security.h"
 /*
  * Copyright (c) 2001-2003, Adam Dunkels.
  * All rights reserved.
@@ -73,6 +74,7 @@
 
 #include "sys/cc.h"
 #include "net/ipv6/uip.h"
+#include "net/linkaddr.h"
 #include "net/ipv6/uip-arch.h"
 #include "net/ipv6/uipopt.h"
 #include "net/ipv6/uip-icmp6.h"
@@ -130,6 +132,108 @@ uint16_t uip_ext_len = 0;
 /** \brief The final protocol after IPv6 extension headers:
   * UIP_PROTO_TCP, UIP_PROTO_UDP or UIP_PROTO_ICMP6 */
 uint8_t uip_last_proto = 0;
+
+#if THESIS_RPL_METRICS
+void thesis_count_forward_in(void);
+void thesis_count_forward_out(void);
+void thesis_count_forward_drop(void);
+#endif
+
+#if THESIS_BLACKHOLE_ATTACK
+static int
+thesis_blackhole_drop_forwarded_udp(void)
+{
+  unsigned int thesis_node_id =
+    (unsigned int)linkaddr_node_addr.u8[LINKADDR_SIZE - 1];
+
+  if(thesis_node_id == THESIS_BLACKHOLE_NODE_ID &&
+     uip_last_proto == UIP_PROTO_UDP &&
+     clock_time() >= (120 * CLOCK_SECOND)) {
+
+    thesis_security_violation(
+      THESIS_ATTACK_BLACKHOLE,
+      thesis_node_id,
+      "FORWARDING_DROP"
+    );
+
+    if(thesis_security_is_mitigated(
+         THESIS_ATTACK_BLACKHOLE)) {
+
+      thesis_security_recovery(
+        THESIS_ATTACK_BLACKHOLE,
+        thesis_node_id,
+        "FORWARDING_RESTORED"
+      );
+
+      return 0;
+    }
+
+
+    printf(
+      "BLACKHOLE_DROP,time=%lu,node=%u,proto=%u\n",
+      (unsigned long)(clock_time() / CLOCK_SECOND),
+      thesis_node_id,
+      (unsigned int)uip_last_proto
+    );
+
+    return 1;
+  }
+
+  return 0;
+}
+#endif
+
+
+#if THESIS_GRAYHOLE_ATTACK
+static int
+thesis_grayhole_drop_forwarded_udp(void)
+{
+  static unsigned long grayhole_counter = 0;
+
+  unsigned int thesis_node_id =
+    (unsigned int)linkaddr_node_addr.u8[LINKADDR_SIZE - 1];
+
+  if(thesis_node_id == THESIS_GRAYHOLE_NODE_ID &&
+     uip_last_proto == UIP_PROTO_UDP &&
+     clock_time() >= (120 * CLOCK_SECOND)) {
+
+    grayhole_counter++;
+
+    if((grayhole_counter % 2) == 0) {
+
+      thesis_security_violation(
+        THESIS_ATTACK_GRAYHOLE,
+        thesis_node_id,
+        "PARTIAL_FORWARDING_DROP"
+      );
+
+      if(thesis_security_is_mitigated(
+           THESIS_ATTACK_GRAYHOLE)) {
+
+        thesis_security_recovery(
+          THESIS_ATTACK_GRAYHOLE,
+          thesis_node_id,
+          "FORWARDING_RESTORED"
+        );
+
+        return 0;
+      }
+
+      printf(
+        "GRAYHOLE_DROP,time=%lu,node=%u,count=%lu\n",
+        (unsigned long)(clock_time() / CLOCK_SECOND),
+        thesis_node_id,
+        grayhole_counter
+      );
+
+      return 1;
+    }
+  }
+
+  return 0;
+}
+#endif
+
 /** @} */
 
 /*---------------------------------------------------------------------------*/
@@ -1484,6 +1588,39 @@ uip_process(uint8_t flag)
       LOG_INFO("Forwarding packet to next hop, dest: ");
       LOG_INFO_6ADDR(&UIP_IP_BUF->destipaddr);
       LOG_INFO_("\n");
+
+#if THESIS_RPL_METRICS
+      if(uip_last_proto == UIP_PROTO_UDP) {
+        thesis_count_forward_in();
+      }
+#endif
+
+#if THESIS_GRAYHOLE_ATTACK
+      if(thesis_grayhole_drop_forwarded_udp()) {
+#if THESIS_RPL_METRICS
+        thesis_count_forward_drop();
+#endif
+        UIP_STAT(++uip_stat.ip.drop);
+        goto drop;
+      }
+#endif
+
+#if THESIS_BLACKHOLE_ATTACK
+      if(thesis_blackhole_drop_forwarded_udp()) {
+#if THESIS_RPL_METRICS
+        thesis_count_forward_drop();
+#endif
+        UIP_STAT(++uip_stat.ip.drop);
+        goto drop;
+      }
+#endif
+
+#if THESIS_RPL_METRICS
+      if(uip_last_proto == UIP_PROTO_UDP) {
+        thesis_count_forward_out();
+      }
+#endif
+
       UIP_STAT(++uip_stat.ip.forwarded);
       goto send;
     } else {
@@ -1615,6 +1752,29 @@ uip_process(uint8_t flag)
           LOG_INFO("Forwarding packet to next hop ");
           LOG_INFO_6ADDR(&UIP_IP_BUF->destipaddr);
           LOG_INFO_("\n");
+
+#if THESIS_RPL_METRICS
+          if(uip_last_proto == UIP_PROTO_UDP) {
+            thesis_count_forward_in();
+          }
+#endif
+
+#if THESIS_BLACKHOLE_ATTACK
+          if(thesis_blackhole_drop_forwarded_udp()) {
+#if THESIS_RPL_METRICS
+            thesis_count_forward_drop();
+#endif
+            UIP_STAT(++uip_stat.ip.drop);
+            goto drop;
+          }
+#endif
+
+#if THESIS_RPL_METRICS
+          if(uip_last_proto == UIP_PROTO_UDP) {
+            thesis_count_forward_out();
+          }
+#endif
+
           UIP_STAT(++uip_stat.ip.forwarded);
 
           goto send; /* Proceed to forwarding */

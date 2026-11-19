@@ -1,0 +1,19 @@
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:145:  private File pcapFile;
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:927:    if (pcapFile != null) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:928:      element = new Element("pcap_file");
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:930:      File file = simulation.getCooja().createPortablePath(pcapFile);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:931:      element.setText(pcapFile.getPath().replaceAll("\\\\", "/"));
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:964:      } else if (name.equals("pcap_file")) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:965:        pcapFile = simulation.getCooja().restorePortablePath(new File(element.getText()));
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:966:        analyzerWithPcap.setPcapFile(pcapFile);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:18:  public void openPcap(File pcapFile) throws IOException {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:22:    if (pcapFile == null) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:23:      /* pcap file not specified, use default file name */
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:24:      pcapFile = new File("radiolog-" + System.currentTimeMillis() + ".pcap");
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:26:    out = new DataOutputStream(new FileOutputStream(pcapFile));
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:37:    logger.info("Opened pcap file " + pcapFile);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:47:      /* pcap file never set, open default */
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:48:      openPcap(null);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:37:  public void setPcapFile(File pcapFile) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:40:        pcapExporter.openPcap(pcapFile);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:42:        logger.error("Could not open pcap file", e);

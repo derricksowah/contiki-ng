@@ -1,0 +1,35 @@
+WIRESHARK / TSHARK VALIDATION COMPLETE
+======================================
+
+Representative simulation seed:
+101
+
+Packet capture source:
+Cooja simulated IEEE 802.15.4 radio medium
+
+Capture implementation:
+Headless Cooja SIM_PLUGIN
+
+PCAP link type:
+IEEE 802.15.4
+
+Captures completed:
+1 baseline
+5 attack-only
+5 mitigated
+
+Total captures:
+11
+
+Analysis:
+tshark / Wireshark-compatible PCAP
+
+Purpose:
+Independent packet-level validation.
+
+Live specification-based detection and mitigation
+remain inside the running Contiki-NG/Cooja
+simulation and are not performed by Wireshark.
+
+STATUS:
+COMPLETE

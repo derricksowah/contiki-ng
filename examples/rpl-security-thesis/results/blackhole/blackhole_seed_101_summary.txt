@@ -1,0 +1,24 @@
+
+================================================
+BLACKHOLE SEED 101 - AUTOMATIC RESULT
+================================================
+Attacker node            : 19
+Activation time          : 60 seconds
+Steady-state TX packets  : 2020
+Delivered packets        : 1852
+Lost packets             : 168
+PDR                      : 91.6832%
+BLACKHOLE_DROP events    : 104
+
+First drop:
+73942000 ID:19 BLACKHOLE_DROP,time=63,node=19,proto=17\nBLACKHOLE_DROP,time=63,node=19,proto=17\nTX,time=73,node=19,seq=6,tx_total=6
+
+Last drop:
+892500000 ID:19 BLACKHOLE_DROP,time=884,node=19,proto=17\nBLACKHOLE_DROP,time=888,node=19,proto=17\nTX,time=891,node=19,seq=88,tx_total=88
+
+Final node-19 RPL state:
+870505000 ID:19 RPL_STATE,time=870,node=19,joined=1,rank=256,parent=1,version=240,etx=128,etx_divisor=128,etx_valid=1,parent_changes=0
+
+Final node-19 forwarding stats:
+NOT FOUND
+================================================

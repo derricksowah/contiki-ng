@@ -1,0 +1,34 @@
+6:    <radiomedium>
+7:      org.contikios.cooja.radiomediums.UDGM
+12:    </radiomedium>
+30:      <moteinterface>org.contikios.cooja.contikimote.interfaces.ContikiRadio</moteinterface>
+54:      <moteinterface>org.contikios.cooja.contikimote.interfaces.ContikiRadio</moteinterface>
+76:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+97:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+118:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+139:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+160:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+181:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+202:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+223:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+244:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+265:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+286:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+307:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+328:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+349:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+370:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+391:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+412:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+433:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+454:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+475:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+496:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+517:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+538:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+559:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+580:        org.contikios.cooja.contikimote.interfaces.ContikiRadio
+603:      <skin>org.contikios.cooja.plugins.skins.UDGMVisualizerSkin</skin>
+644:      <showRadioRXTX />
+645:      <showRadioHW />
+656:    org.contikios.cooja.plugins.RadioLogger

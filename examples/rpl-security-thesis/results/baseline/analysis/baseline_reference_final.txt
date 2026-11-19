@@ -1,0 +1,51 @@
+RPL SECURITY THESIS - BASELINE REFERENCE
+========================================
+
+Baseline seeds:
+101, 202, 303, 404, 505
+
+Warm-up period:
+0-60 seconds
+
+Steady-state period:
+>60 seconds
+
+PDR:
+Mean = 99.9901%
+Observed range = 99.9504% - 100.0000%
+
+RPL Rank:
+Mean range across runs = 327.06 - 330.87
+Observed client rank minimum = 256
+Observed client rank maximum = 496
+
+ETX:
+Mean range across runs = 1.0462 - 1.0560
+Observed ETX minimum = 1.0000
+Observed ETX maximum = 1.6250
+
+DODAG Version:
+Normal observed version = 240
+Normal steady-state version changes = 0
+
+Parent Switching:
+Normal maximum observed parent changes = 0
+
+DIO:
+Maximum observed DIO-in rate = 5.4815 messages/min
+Maximum observed DIO-out rate = 1.2593 messages/min
+
+DIS:
+Steady-state DIS-out mean = 0.0 messages/min
+
+DAO:
+Steady-state DAO-out mean = 0.0 messages/min
+
+Reachability:
+Unreachable events after warm-up = 0
+
+Interpretation:
+These values are empirical baseline references from the five normal
+simulation runs. They are not treated as universal RFC thresholds.
+Specification-based attack rules will combine RFC/RPL protocol
+constraints with these observed normal operating ranges.

@@ -1,0 +1,51 @@
+VALIDATED NORMAL RPL BASELINE
+
+Topology:
+25 motes
+Node 1: RPL root/server
+Nodes 2-25: RPL clients
+
+Experiment duration:
+900 simulated seconds
+
+Seeds:
+101
+202
+303
+404
+505
+
+NORMAL OBSERVED RANGES
+
+PDR:
+99.9524% - 100%
+
+Steady-state Rank:
+256 - 473
+
+Mean Rank across runs:
+approximately 327.15
+
+ETX:
+1.0000 - 1.4766
+
+Mean ETX across runs:
+approximately 1.044
+
+DODAG Version:
+240 in all baseline runs
+
+Parent changes:
+0 in all baseline runs
+
+Network-wide DIS transmissions:
+4 - 7 per 900-second run
+
+Network-wide DIO transmissions:
+527 - 540 per 900-second run
+
+Network-wide DAO transmissions:
+24 per 900-second run
+
+Final topology state:
+All 25 nodes joined in every run

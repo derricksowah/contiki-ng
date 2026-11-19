@@ -1,0 +1,42 @@
+RPL THESIS - NORMAL BASELINE REFERENCE PROFILE
+==============================================
+
+Experiment configuration
+------------------------
+Seeds: 101, 202, 303, 404, 505
+Steady-state analysis starts: 120 s
+Nodes: 25 (1 root + 24 clients)
+
+Observed steady-state behaviour
+-------------------------------
+number_of_seeds: 5
+steady_state_start_s: 120
+joined_ratio_min: 1.0
+rank_observed_min: 128
+rank_observed_max: 473
+rank_average_min: 318.2076923076923
+rank_average_max: 321.74615384615385
+etx_observed_min: 1.0
+etx_observed_max: 1.4765625
+etx_average_min: 1.0402018229166667
+etx_average_max: 1.0488656850961537
+version_observed_min: 240
+version_observed_max: 240
+parent_changes_max: 0
+dis_in_30s_max: 0
+dis_out_30s_max: 0
+dio_in_30s_max: 11
+dio_out_30s_max: 2
+dao_in_30s_max: 0
+dao_out_30s_max: 0
+
+Interpretation
+--------------
+All nodes joined after the convergence period.
+DODAG version remained stable at 240.
+No established-parent switches were observed.
+No DIS traffic was observed during steady state.
+No DAO traffic was observed during steady state.
+Normal periodic DIO activity continued.
+
+These values describe empirical normal behaviour. Attack detection rules must also enforce RFC 6550/RPL protocol relationships and must not rely solely on global baseline maxima.

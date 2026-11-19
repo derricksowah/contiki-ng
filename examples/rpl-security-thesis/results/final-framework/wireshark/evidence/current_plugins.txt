@@ -1,0 +1,71 @@
+587-      <motetype_identifier>mtype405</motetype_identifier>
+588-    </mote>
+589-  </simulation>
+590:  <plugin>
+591-    org.contikios.cooja.plugins.SimControl
+592-    <width>229</width>
+593-    <z>3</z>
+594-    <height>157</height>
+595-    <location_x>11</location_x>
+596-    <location_y>6</location_y>
+597-  </plugin>
+598:  <plugin>
+599-    org.contikios.cooja.plugins.Visualizer
+600-    <plugin_config>
+601-      <moterelations>true</moterelations>
+602-      <skin>org.contikios.cooja.plugins.skins.IDVisualizerSkin</skin>
+603-      <skin>org.contikios.cooja.plugins.skins.UDGMVisualizerSkin</skin>
+604-      <viewport>1.1719333465234514 0.0 0.0 1.1719333465234514 -4.934308660658031 20.209777273580123</viewport>
+605-    </plugin_config>
+606-    <width>234</width>
+--
+609-    <location_x>10</location_x>
+610-    <location_y>170</location_y>
+611-  </plugin>
+612:  <plugin>
+613-    org.contikios.cooja.plugins.LogListener
+614-    <plugin_config>
+615-      <filter>App</filter>
+616-      <formatted_time />
+617-      <coloring />
+618-    </plugin_config>
+619-    <width>1074</width>
+620-    <z>0</z>
+--
+622-    <location_x>844</location_x>
+623-    <location_y>3</location_y>
+624-  </plugin>
+625:  <plugin>
+626-    org.contikios.cooja.plugins.TimeLine
+627-    <plugin_config>
+628-      <mote>0</mote>
+629-      <mote>1</mote>
+630-      <mote>2</mote>
+631-      <mote>3</mote>
+632-      <mote>4</mote>
+633-      <mote>5</mote>
+--
+652-    <location_x>1</location_x>
+653-    <location_y>716</location_y>
+654-  </plugin>
+655:  <plugin>
+656-    org.contikios.cooja.plugins.RadioLogger
+657-    <plugin_config>
+658-      <split>407</split>
+659-      <formatted_time />
+660-      <showdups>false</showdups>
+661-      <hidenodests>false</hidenodests>
+662-    </plugin_config>
+663-    <width>595</width>
+--
+666-    <location_x>245</location_x>
+667-    <location_y>4</location_y>
+668-  </plugin>
+669:  <plugin>
+670-    org.contikios.cooja.plugins.ScriptRunner
+671-    <plugin_config>
+672-      <scriptfile>[CONFIG_DIR]/baseline.js</scriptfile>
+673-      <active>true</active>
+674-    </plugin_config>
+675-  </plugin>
+676-</simconf>

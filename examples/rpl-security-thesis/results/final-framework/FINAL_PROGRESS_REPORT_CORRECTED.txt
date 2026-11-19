@@ -1,0 +1,48 @@
+RPL THESIS AUTHORITATIVE FINAL IMPLEMENTATION STATUS
+=================================================================
+
+Simulation topology: COMPLETE
+Five-seed baseline: COMPLETE
+Five attack implementations: COMPLETE
+Live specification-based detection: COMPLETE
+Automatic in-simulation mitigation: COMPLETE
+Sequence-aware PDR analysis: COMPLETE
+Rank/ETX/version monitoring: COMPLETE
+RPL control-message monitoring: COMPLETE
+Energest monitoring: COMPLETE
+Service-recovery latency analysis: COMPLETE
+
+AUTHORITATIVE SCENARIO RESULTS
+-----------------------------------------------------------------
+blackhole / attack-only: PDR=91.1143%, detection=0/5, mitigation=0/5, recovery_s=
+blackhole / mitigated: PDR=99.9049%, detection=5/5, mitigation=5/5, recovery_s=0.029432
+grayhole / attack-only: PDR=95.5552%, detection=0/5, mitigation=0/5, recovery_s=
+grayhole / mitigated: PDR=99.9051%, detection=5/5, mitigation=5/5, recovery_s=0.016235
+decreased-rank / attack-only: PDR=99.9904%, detection=0/5, mitigation=0/5, recovery_s=
+decreased-rank / mitigated: PDR=99.9904%, detection=5/5, mitigation=5/5, recovery_s=0.142165
+dodag-version / attack-only: PDR=96.1764%, detection=0/5, mitigation=0/5, recovery_s=
+dodag-version / mitigated: PDR=99.9905%, detection=5/5, mitigation=5/5, recovery_s=0.584158
+dis-flooding / attack-only: PDR=99.9905%, detection=0/5, mitigation=0/5, recovery_s=
+dis-flooding / mitigated: PDR=100.0%, detection=5/5, mitigation=5/5, recovery_s=0.103955
+
+Recovery metric definition:
+Elapsed time from the live mitigation event to the first subsequent successful application packet reception at the RPL root.
+
+REMAINING EXPERIMENTAL STEP
+Wireshark/tshark packet-level validation only.
+
+WIRESHARK / TSHARK PACKET-LEVEL VALIDATION
+-----------------------------------------------------------------
+Headless IEEE 802.15.4 packet capture: COMPLETE
+Baseline PCAP capture: COMPLETE
+Blackhole attack/mitigation captures: COMPLETE
+Grayhole attack/mitigation captures: COMPLETE
+Decreased Rank attack/mitigation captures: COMPLETE
+DODAG Version attack/mitigation captures: COMPLETE
+DIS Flooding attack/mitigation captures: COMPLETE
+tshark extraction and packet audit: COMPLETE
+
+Total representative PCAP captures: 11
+Representative random seed: 101
+
+EXPERIMENTAL PHASE: COMPLETE

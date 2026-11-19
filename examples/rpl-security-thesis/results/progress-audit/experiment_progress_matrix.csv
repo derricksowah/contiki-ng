@@ -1,0 +1,7 @@
+experiment,result_directory,seed_logs,five_seeds_complete,attack_events,detection_events,mitigation_events,analysis_csv_files,status
+baseline,/workspaces/contiki-ng/examples/rpl-security-thesis/results/baseline,5,YES,0,0,0,16,COMPLETE
+blackhole,/workspaces/contiki-ng/examples/rpl-security-thesis/results/blackhole,5,YES,1005,0,0,3,ATTACK EXPERIMENT COMPLETE
+grayhole,/workspaces/contiki-ng/examples/rpl-security-thesis/results/grayhole,5,YES,501,0,0,0,ATTACK EXPERIMENT COMPLETE
+decreased-rank,/workspaces/contiki-ng/examples/rpl-security-thesis/results/decreased-rank,5,YES,204,0,0,1,ATTACK EXPERIMENT COMPLETE
+dodag-version,/workspaces/contiki-ng/examples/rpl-security-thesis/results/dodag-version,5,YES,1674,0,0,0,ATTACK EXPERIMENT COMPLETE
+dis-flooding,,0,NO,0,0,0,0,MISSING

@@ -1,0 +1,11 @@
+attack,mode,mean_pdr_percent,min_pdr_percent,max_pdr_percent,runs_with_detection,runs_with_mitigation,runs_with_recovery,mean_detection_time_s,mean_recovery_delay_s,mean_energy_tx_ticks,mean_energy_rx_ticks
+blackhole,attack-only,91.1143,85.2133,96.2822,0,0,0,,,32016374.4,21717983625.6
+blackhole,mitigated,99.9049,99.9047,99.9052,5,5,5,132,0,34890448,21715110480
+grayhole,attack-only,95.5552,92.5926,98.1437,0,0,0,,,33454736,21716545467.2
+grayhole,mitigated,99.9051,99.9047,99.9052,5,5,5,145.4,0,34976156.8,21715024910.4
+decreased-rank,attack-only,99.9904,99.9522,100.0,0,0,0,,,35128438.4,21714871764.8
+decreased-rank,mitigated,99.9904,99.9522,100.0,5,5,5,145,0,34963233.6,21715036766.4
+dodag-version,attack-only,96.1764,89.3146,99.5583,0,0,0,,,52996968,21697003790.4
+dodag-version,mitigated,96.1764,89.3146,99.5583,0,0,0,,,52996968,21697003790.4
+dis-flooding,attack-only,99.9905,99.9527,100.0,0,0,0,,,43699355.2,21706300644.8
+dis-flooding,mitigated,100.0,100.0,100.0,5,5,5,120,0,35152219.2,21714848590.4

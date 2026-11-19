@@ -1,0 +1,11 @@
+WIRESHARK / TSHARK PACKET VALIDATION
+============================================================
+
+PASS: 11 PCAP files generated
+PASS: All PCAP files contain frames
+PASS: All captures contain IEEE 802.15.4 traffic
+PASS: DIS attack exceeds baseline DIS traffic
+PASS: DIS mitigation reduces DIS traffic
+
+Packet decoding note:
+IEEE 802.15.4 PCAP traffic was captured directly from Cooja's simulated radio medium. IPv6, UDP and RPL counts depend on tshark's 6LoWPAN decompression/dissector context and are reported separately from the capture-validity checks.

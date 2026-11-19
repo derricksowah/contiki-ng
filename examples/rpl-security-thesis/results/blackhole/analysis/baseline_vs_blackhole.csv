@@ -1,0 +1,6 @@
+seed,baseline_pdr,blackhole_pdr,pdr_drop_points,blackhole_drops,packet_loss,affected_nodes,baseline_rank_mean,blackhole_rank_mean,baseline_etx_mean,blackhole_etx_mean,baseline_parent_changes,blackhole_parent_changes,baseline_dis_out,blackhole_dis_out,baseline_dio_out,blackhole_dio_out,baseline_dao_out,blackhole_dao_out,baseline_radio_tx,blackhole_radio_tx
+101,100.0,91.7893,8.2107,173,173,20 25,329.819,326.304,1.0489,1.0412,0,0,4,4,540,546,24,24,35030432,32392144
+202,100.0,87.642,12.358,261,261,20 24 25,326.665,326.75,1.0407,1.0394,0,0,5,5,536,532,24,24,34920144,30965672
+303,100.0,91.8251,8.1749,172,172,24 25,326.133,328.446,1.0424,1.0406,0,0,7,7,539,542,24,24,35022816,32303840
+404,100.0,91.7022,8.2978,175,175,20 25,326.912,329.5,1.0467,1.0527,0,0,4,4,527,532,24,24,35036128,32550696
+505,99.9524,91.7776,8.1749,173,173,20 25,326.218,325.348,1.0402,1.0369,0,0,7,7,537,543,24,25,34806648,32105944

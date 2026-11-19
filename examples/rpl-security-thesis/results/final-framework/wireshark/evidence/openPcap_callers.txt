@@ -1,0 +1,3 @@
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:18:  public void openPcap(File pcapFile) throws IOException {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:48:      openPcap(null);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:40:        pcapExporter.openPcap(pcapFile);

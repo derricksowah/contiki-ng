@@ -1,0 +1,6 @@
+seed,attack_start_s,flood_bursts,unique_tx,unique_delivered,pdr_percent,max_dis_in_cumulative,max_dis_out_cumulative,max_dis_in_30s,max_dis_out_30s,rpl_state_records,rpl_ctrl_records,energy_records
+101,120,78,2100,2100,100.0,1466,1500,60,60,725,725,725
+202,120,78,2111,2111,100.0,1468,1500,60,60,725,725,725
+303,120,78,2112,2111,99.9527,1478,1500,61,60,725,725,725
+404,120,78,2107,2107,100.0,1480,1500,60,60,725,725,725
+505,120,78,2102,2102,100.0,1451,1500,60,60,725,725,725

@@ -1,0 +1,40 @@
+WIRESHARK / TSHARK VALIDATION
+=============================
+
+The live detector and mitigator operate inside Cooja.
+Wireshark/tshark are used as independent packet-level
+validation tools.
+
+Representative seed:
+101
+
+Capture scenarios:
+1. Baseline
+2. Blackhole attack-only
+3. Blackhole mitigated
+4. Grayhole attack-only
+5. Grayhole mitigated
+6. Decreased Rank attack-only
+7. Decreased Rank mitigated
+8. DODAG Version attack-only
+9. DODAG Version mitigated
+10. DIS Flood attack-only
+11. DIS Flood mitigated
+
+Validate:
+- UDP delivery behaviour
+- ICMPv6/RPL control traffic
+- DIS flood increase and suppression
+- DIO/version behaviour
+- routing behaviour before and after mitigation
+
+Recommended tshark export fields:
+frame.number
+frame.time_relative
+frame.len
+ipv6.src
+ipv6.dst
+icmpv6.type
+icmpv6.code
+udp.srcport
+udp.dstport

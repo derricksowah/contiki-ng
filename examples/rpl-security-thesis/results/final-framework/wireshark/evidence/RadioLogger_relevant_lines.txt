@@ -1,0 +1,109 @@
+47:import java.io.File;
+50:import java.nio.file.Files;
+62:import javax.swing.JFileChooser;
+91:import org.contikios.cooja.plugins.analyzers.FragHeadPacketAnalyzer;
+92:import org.contikios.cooja.plugins.analyzers.ICMPv6Analyzer;
+93:import org.contikios.cooja.plugins.analyzers.IEEE802154Analyzer;
+94:import org.contikios.cooja.plugins.analyzers.IPHCPacketAnalyzer;
+95:import org.contikios.cooja.plugins.analyzers.IPv6PacketAnalyzer;
+96:import org.contikios.cooja.plugins.analyzers.PacketAnalyzer;
+97:import org.contikios.cooja.plugins.analyzers.RadioLoggerAnalyzerSuite;
+141:  private final HashMap<String, Action> analyzerMap = new HashMap<>();
+142:  private String analyzerName;
+143:  private ArrayList<PacketAnalyzer> analyzers;
+144:  private final IEEE802154Analyzer analyzerWithPcap;
+145:  private File pcapFile;
+158:    JMenu fileMenu = new JMenu("File");
+160:    JMenu analyzerMenu = new JMenu("Analyzer");
+163:    menuBar.add(fileMenu);
+165:    menuBar.add(analyzerMenu);
+170:    ArrayList<PacketAnalyzer> lowpanAnalyzers = new ArrayList<>();
+171:    lowpanAnalyzers.add(new IEEE802154Analyzer(false));
+172:    lowpanAnalyzers.add(new FragHeadPacketAnalyzer());
+173:    lowpanAnalyzers.add(new IPHCPacketAnalyzer());
+174:    lowpanAnalyzers.add(new IPv6PacketAnalyzer());
+175:    lowpanAnalyzers.add(new ICMPv6Analyzer());
+177:    analyzerWithPcap = new IEEE802154Analyzer(true);
+178:    ArrayList<PacketAnalyzer> lowpanAnalyzersPcap = new ArrayList<>();
+179:    lowpanAnalyzersPcap.add(analyzerWithPcap);
+180:    lowpanAnalyzersPcap.add(new FragHeadPacketAnalyzer());
+181:    lowpanAnalyzersPcap.add(new IPHCPacketAnalyzer());
+182:    lowpanAnalyzersPcap.add(new IPv6PacketAnalyzer());
+183:    lowpanAnalyzersPcap.add(new ICMPv6Analyzer());
+501:    Action saveAction = new AbstractAction("Save to file...") {
+504:        JFileChooser fc = new JFileChooser();
+505:        int returnVal = fc.showSaveDialog(Cooja.getTopParentContainer());
+506:        if (returnVal != JFileChooser.APPROVE_OPTION) {
+510:        File saveFile = fc.getSelectedFile();
+511:        if (saveFile.exists()) {
+517:                  "A file with the same name already exists.\nDo you want to remove it?",
+518:                  "Overwrite existing file?", JOptionPane.YES_NO_OPTION,
+525:        if (saveFile.exists() && !saveFile.canWrite()) {
+526:          logger.error("No write access to file: " + saveFile);
+531:          PrintWriter outStream = new PrintWriter(Files.newBufferedWriter(saveFile.toPath(), UTF_8));
+537:          logger.error("Could not write to file: " + saveFile);
+541:    fileMenu.add(new JMenuItem(saveAction));
+555:            createAnalyzerAction("No Analyzer", "none", null, true));
+557:    analyzerMenu.add(rbMenuItem);
+559:    rbMenuItem = new JRadioButtonMenuItem(createAnalyzerAction(
+560:            "6LoWPAN Analyzer", "6lowpan", lowpanAnalyzers, false));
+562:    analyzerMenu.add(rbMenuItem);
+564:    rbMenuItem = new JRadioButtonMenuItem(createAnalyzerAction(
+565:            "6LoWPAN Analyzer with PCAP", "6lowpan-pcap", lowpanAnalyzersPcap, false));
+567:    analyzerMenu.add(rbMenuItem);
+569:    /* Load additional analyzers specified by projects (cooja.config) */
+570:    String[] projectAnalyzerSuites
+571:            = gui.getProjectConfig().getStringArrayValue(RadioLogger.class, "ANALYZERS");
+572:    if (projectAnalyzerSuites != null) {
+573:      for (String suiteName: projectAnalyzerSuites) {
+577:        Class<? extends RadioLoggerAnalyzerSuite> suiteClass
+578:                = gui.tryLoadClass(RadioLogger.this, RadioLoggerAnalyzerSuite.class, suiteName);
+580:          RadioLoggerAnalyzerSuite suite = suiteClass.getDeclaredConstructor().newInstance();
+581:          ArrayList<PacketAnalyzer> suiteAnalyzers = suite.getAnalyzers();
+582:          rbMenuItem = new JRadioButtonMenuItem(createAnalyzerAction(
+583:                  suite.getDescription(), suiteName, suiteAnalyzers, false));
+585:          analyzerMenu.add(rbMenuItem);
+587:          logger.warn("Failed to load analyzer suite '" + suiteName + "': " + e1.getMessage());
+793:    /* default analyzer */
+794:    PacketAnalyzer.Packet packet = new PacketAnalyzer.Packet(data, PacketAnalyzer.MAC_LEVEL,
+796:    if (analyzePacket(packet, brief, verbose)) {
+818:  private boolean analyzePacket(PacketAnalyzer.Packet packet, StringBuilder brief, StringBuilder verbose) {
+819:    if (analyzers == null) return false;
+821:      boolean analyze = true;
+822:      while (analyze) {
+823:        analyze = false;
+824:        for (PacketAnalyzer analyzer : analyzers) {
+825:          if (analyzer.matchPacket(packet)) {
+826:            int res = analyzer.analyzePacket(packet, brief, verbose);
+831:            if (res != PacketAnalyzer.ANALYSIS_OK_CONTINUE) {
+832:              /* this was the final or the analysis failed - no analyzable payload possible here... */
+836:            analyze = packet.hasMoreData();
+842:      logger.warn("Error when analyzing packet: " + e.getMessage(), e);
+888:  public Collection<Element> getConfigXML() {
+891:    Element element = new Element("split");
+896:      element = new Element("formatted_time");
+901:      element = new Element("showdups");
+907:      element = new Element("hidenodests");
+912:    if (analyzerName != null && analyzers != null) {
+913:      element = new Element("analyzers");
+914:      element.setAttribute("name", analyzerName);
+920:        element = new Element("alias");
+927:    if (pcapFile != null) {
+928:      element = new Element("pcap_file");
+929:      // FIXME: "file" is unused.
+930:      File file = simulation.getCooja().createPortablePath(pcapFile);
+931:      element.setText(pcapFile.getPath().replaceAll("\\\\", "/"));
+939:  public boolean setConfigXML(Collection<Element> configXML, boolean visAvailable) {
+940:    for (Element element : configXML) {
+957:      } else if ("analyzers".equals(name)) {
+958:        String analyzerName = element.getAttributeValue("name");
+960:        if (analyzerName != null && ((action = analyzerMap.get(analyzerName)) != null)) {
+964:      } else if (name.equals("pcap_file")) {
+965:        pcapFile = simulation.getCooja().restorePortablePath(new File(element.getText()));
+966:        analyzerWithPcap.setPcapFile(pcapFile);
+1025:  private Action createAnalyzerAction(String name, final String actionName,
+1026:                                      final ArrayList<PacketAnalyzer> analyzerList, boolean selected) {
+1030:        if (analyzers != analyzerList) {
+1031:          analyzers = analyzerList;
+1032:          analyzerName = actionName;
+1038:    analyzerMap.put(actionName, action);

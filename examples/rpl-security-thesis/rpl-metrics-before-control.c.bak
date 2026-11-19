@@ -1,0 +1,118 @@
+#include "contiki.h"
+
+#include "net/linkaddr.h"
+#include "net/link-stats.h"
+
+#include "net/routing/rpl-lite/rpl.h"
+#include "net/routing/rpl-lite/rpl-neighbor.h"
+
+#include "rpl-metrics.h"
+
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+
+static uint32_t parent_switches = 0;
+
+/*---------------------------------------------------------------------------*/
+static unsigned int
+get_node_id(void)
+{
+  return (unsigned int)linkaddr_node_addr.u8[LINKADDR_SIZE - 1];
+}
+/*---------------------------------------------------------------------------*/
+static unsigned long
+simulation_time_seconds(void)
+{
+  return (unsigned long)(clock_time() / CLOCK_SECOND);
+}
+/*---------------------------------------------------------------------------*/
+void
+thesis_parent_switch(rpl_nbr_t *old_parent, rpl_nbr_t *new_parent)
+{
+  /*
+   * Initial attachment NULL -> parent is not counted as a switch.
+   * Only changes between two established parents are counted.
+   */
+  if(old_parent != NULL &&
+     new_parent != NULL &&
+     old_parent != new_parent) {
+    parent_switches++;
+
+    printf(
+      "PARENT_SWITCH,time=%lu,node=%u,count=%" PRIu32 "\n",
+      simulation_time_seconds(),
+      get_node_id(),
+      parent_switches
+    );
+  }
+}
+/*---------------------------------------------------------------------------*/
+uint32_t
+thesis_parent_switch_count(void)
+{
+  return parent_switches;
+}
+/*---------------------------------------------------------------------------*/
+void
+thesis_print_rpl_state(void)
+{
+  rpl_dag_t *dag;
+  rpl_nbr_t *parent;
+  const linkaddr_t *parent_lladdr;
+  const struct link_stats *stats;
+
+  unsigned int parent_id = 0;
+  uint16_t etx = 0;
+  uint8_t etx_valid = 0;
+
+  dag = rpl_get_any_dag();
+
+  if(dag == NULL) {
+    printf(
+      "RPL_STATE,time=%lu,node=%u,joined=0,rank=65535,"
+      "parent=0,version=0,etx=0,etx_valid=0,"
+      "parent_changes=%" PRIu32 "\n",
+      simulation_time_seconds(),
+      get_node_id(),
+      parent_switches
+    );
+    return;
+  }
+
+  parent = dag->preferred_parent;
+
+  if(parent != NULL) {
+    parent_lladdr = rpl_neighbor_get_lladdr(parent);
+
+    if(parent_lladdr != NULL) {
+      parent_id =
+        (unsigned int)parent_lladdr->u8[LINKADDR_SIZE - 1];
+
+      stats = link_stats_from_lladdr(parent_lladdr);
+
+      if(stats != NULL) {
+        etx = stats->etx;
+        etx_valid = link_stats_is_fresh(stats) ? 1 : 0;
+      }
+    }
+  }
+
+  printf(
+    "RPL_STATE,time=%lu,node=%u,joined=%u,"
+    "rank=%u,parent=%u,version=%u,"
+    "etx=%u,etx_divisor=%u,etx_valid=%u,"
+    "parent_changes=%" PRIu32 "\n",
+    simulation_time_seconds(),
+    get_node_id(),
+    dag->rank != 0xffff ? 1 : 0,
+    (unsigned int)dag->rank,
+    parent_id,
+    (unsigned int)dag->version,
+    (unsigned int)etx,
+    (unsigned int)LINK_STATS_ETX_DIVISOR,
+    etx_valid,
+    parent_switches
+  );
+}
+/*---------------------------------------------------------------------------*/

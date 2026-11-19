@@ -1,0 +1,89 @@
+FINAL WIRESHARK VALIDATION MATRIX
+=================================
+
+Use representative seed: 101
+
+01 baseline_seed101.pcapng
+
+02 blackhole_attack_seed101.pcapng
+03 blackhole_mitigated_seed101.pcapng
+
+04 grayhole_attack_seed101.pcapng
+05 grayhole_mitigated_seed101.pcapng
+
+06 decreased_rank_attack_seed101.pcapng
+07 decreased_rank_mitigated_seed101.pcapng
+
+08 dodag_version_attack_seed101.pcapng
+09 dodag_version_mitigated_seed101.pcapng
+
+10 dis_flood_attack_seed101.pcapng
+11 dis_flood_mitigated_seed101.pcapng
+
+
+Evidence expected
+=================
+
+Baseline
+--------
+Normal IPv6/RPL and UDP traffic.
+
+Blackhole
+---------
+Attack:
+Reduced successful application forwarding.
+
+Mitigated:
+Application delivery restored after detection.
+
+Grayhole
+--------
+Attack:
+Intermittent application forwarding loss.
+
+Mitigated:
+Delivery restored after detection.
+
+Decreased Rank
+--------------
+Attack:
+Malicious routing advertisement behaviour.
+
+Mitigated:
+Invalid Rank behaviour suppressed.
+
+DODAG Version
+-------------
+Attack:
+Forged DODAG version advertisement.
+
+Mitigated:
+Forged version increment suppressed and legitimate
+version preserved.
+
+DIS Flood
+---------
+Attack:
+Large increase in DIS traffic.
+
+Mitigated:
+Excessive DIS transmissions suppressed/rate-limited.
+
+
+Useful Wireshark filters
+========================
+
+IPv6:
+ipv6
+
+ICMPv6:
+icmpv6
+
+UDP:
+udp
+
+ICMPv6 only after 120 seconds:
+icmpv6 && frame.time_relative >= 120
+
+UDP after 120 seconds:
+udp && frame.time_relative >= 120

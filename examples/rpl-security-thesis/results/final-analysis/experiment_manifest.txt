@@ -1,0 +1,34 @@
+RPL THESIS EXPERIMENT MANIFEST
+
+Seeds:
+101
+202
+303
+404
+505
+
+Simulation duration:
+900000 ms per run
+
+Clean baseline:
+COMPLETED
+
+Blackhole:
+COMPLETED
+Attacker node: 12
+
+Grayhole:
+COMPLETED
+Attacker node: 12
+
+Decreased Rank:
+COMPLETED
+Configuration preserved from project-conf.h
+
+DODAG Version:
+IMPLEMENTATION_REQUIRED
+
+DIS Flood:
+IMPLEMENTATION_REQUIRED
+
+All experiments use the same baseline topology and simulation duration.

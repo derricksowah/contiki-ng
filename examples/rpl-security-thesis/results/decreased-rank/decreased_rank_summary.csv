@@ -1,0 +1,6 @@
+seed,attack_advertisements,node19_internal_rank,advertised_rank,nodes_using_19,max_parent_changes,sent,delivered,pdr_percent
+101,0,256,NONE,"20,25",0,2015,2015,100.0
+202,0,259,NONE,"20,24,25",0,2011,2011,100.0
+303,0,256,NONE,"24,25",0,2009,2009,100.0
+404,0,256,NONE,"20,25",0,2011,2011,100.0
+505,0,267,NONE,"20,25",0,2016,2015,99.9504

@@ -1,0 +1,5 @@
+scenario,runs,mean_pdr_percent,mean_rank,mean_etx,mean_parent_changes,mean_root_dis_in,mean_root_dio_in,mean_root_dao_in,mean_total_fwd_drop,mean_energy_tx_total,mean_energy_rx_total
+baseline,5,99.9904,327.1494,1.0438,0.0,0.0,137.0,24.0,0.0,24618564.8,20855381435.2
+blackhole,5,90.4502,326.9526,1.0416,0.0,0.0,138.6,24.0,194.0,22495379.2,20857504620.8
+grayhole,5,95.244,326.9264,1.0393,0.0,0.0,139.4,24.0,96.6,23543297.6,20856456702.4
+decreased-rank,5,100.0,314.636,1.0437,0.8,0.0,138.6,24.8,0.0,24798392.0,20855201811.2

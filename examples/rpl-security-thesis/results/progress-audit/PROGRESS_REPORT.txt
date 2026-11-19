@@ -1,0 +1,36 @@
+RPL THESIS AUTHORITATIVE PROGRESS REPORT
+=======================================================
+
+Thesis:
+A Specification-Based Detection and Mitigation Framework for RPL Routing Attacks in Simulated IPv6 Wireless Sensor Networks
+
+EXPERIMENT STATUS
+-------------------------------------------------------
+baseline: COMPLETE (5/5 seeds)
+blackhole: ATTACK EXPERIMENT COMPLETE (5/5 seeds)
+grayhole: ATTACK EXPERIMENT COMPLETE (5/5 seeds)
+decreased-rank: ATTACK EXPERIMENT COMPLETE (5/5 seeds)
+dodag-version: ATTACK EXPERIMENT COMPLETE (5/5 seeds)
+dis-flooding: MISSING (0/5 seeds)
+
+COMPLETE / AVAILABLE
+-------------------------------------------------------
+baseline
+blackhole
+grayhole
+decreased-rank
+dodag-version
+
+MISSING / NEEDS ATTENTION
+-------------------------------------------------------
+dis-flooding
+
+NEXT PHASE
+-------------------------------------------------------
+1. Resolve only experiments marked missing/incomplete.
+2. Validate specification-based detection events.
+3. Validate mitigation and recovery evidence.
+4. Produce baseline vs attack vs mitigation comparison.
+5. Calculate PDR, ETX, Rank, control overhead, energy and recovery time.
+6. Freeze experiment artefacts and checksums.
+7. Use final verified results for Chapters 4 and 5.

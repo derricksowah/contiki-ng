@@ -1,0 +1,10 @@
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/RadioLogger.java:111:public class RadioLogger extends VisPlugin {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:10:class PcapExporter {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:11:  private static final Logger logger = LoggerFactory.getLogger(PcapExporter.class);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/PcapExporter.java:15:  public PcapExporter() {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:29:  private PcapExporter pcapExporter;
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:33:      pcapExporter = new PcapExporter();
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:38:    if (pcapExporter != null) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:40:        pcapExporter.openPcap(pcapFile);
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:63:    if (pcapExporter != null) {
+/workspaces/contiki-ng/tools/cooja/java/org/contikios/cooja/plugins/analyzers/IEEE802154Analyzer.java:65:        pcapExporter.exportPacketData(packet.getPayload(), packet.getTimestamp());
